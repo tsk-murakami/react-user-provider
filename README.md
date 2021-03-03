@@ -113,7 +113,7 @@ interface IOptions {
     reLogin(): Promise<IUserState>
 };
 const UserProvider: React.FC<IOptions> = props => { /** Logic */}
-
+```
 
 ## License
 
