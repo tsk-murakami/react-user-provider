@@ -1,6 +1,6 @@
 
 import React, { useState, useCallback, useEffect } from "react";
-import UserContext, { IUserState, IStatus } from "./user-context";
+import UserContext, { IUserState, IStatus, CallbackFunction } from "./user-context";
 
 export interface IOptions {
     reLogin(): Promise<IUserState>
@@ -15,13 +15,19 @@ const UserProvider: React.FC<IOptions> = props => {
     const [ status, setStatus ] = useState<IStatus>( { isAuthenticated: false, isLoading: true } )
 
     const handleChange = useCallback( ( { user, workspace }: IUserState ) => {
-        if( user ) setUserInfos(user);
+        if( user ) { 
+            setUserInfos( (prev: any) => {
+                if( !prev ) setStatus( { isAuthenticated: true, isLoading: false } )
+                return user
+            });
+        };
         if( workspace ) setWorkspace(workspace)
     }, [] )
 
-    const logout = useCallback( async (cb?: () => Promise<void>) => {
+    const logout = useCallback( async (cb?: CallbackFunction) => {
         setUserInfos(undefined);
         setWorkspace(undefined);
+        setStatus({ isAuthenticated: false, isLoading: false });
         if( cb ) await cb()
     }, [] )
 

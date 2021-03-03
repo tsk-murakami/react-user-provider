@@ -10,6 +10,10 @@ export const createWrapper = ({ reLogin=simpleReLogin } : Partial<IOptions> ) =>
         </UserProvider>
     );
 
-const simpleReLogin = async () => {
+export const simpleReLogin = async () => {
     return { user: { name: "User" } }
+};
+
+export const errorRelogin = async () => {
+    throw Error("Error")
 };

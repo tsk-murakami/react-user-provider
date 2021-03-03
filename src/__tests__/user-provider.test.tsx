@@ -4,24 +4,80 @@ import { useContext } from "react";
 import { renderHook, act } from '@testing-library/react-hooks';
 import userContext from "../user-context";
 
-import { createWrapper } from './helpers'
+import { createWrapper, errorRelogin, simpleReLogin } from './helpers'
 
-describe('ExampleComponent', () => {
-  it('is truthy', async () => {
-    const wrapper = createWrapper({})
+describe('Simple', () => {
+  it('isAuthenticated', async () => {
+    const wrapper = createWrapper({ reLogin: simpleReLogin })
     const { result, waitForNextUpdate } = renderHook( 
       () => useContext(userContext),
       { wrapper }
       )
-    console.log( result.current )
+    expect( result.current.isLoading ).toEqual(true)
+    expect( result.current.isAuthenticated ).toEqual(false)
     await waitForNextUpdate()
-    console.log( result.current )
+    expect( result.current.isAuthenticated ).toEqual(true)
+    expect( result.current.isLoading ).toEqual(false)
+    const reloginRes = await simpleReLogin()
+    expect( result.current.user ).toEqual(reloginRes.user)
+  })
+  it('set user infos', async () => {
+    const wrapper = createWrapper({ reLogin: errorRelogin })
+    const { result, waitForNextUpdate } = renderHook( 
+      () => useContext(userContext),
+      { wrapper }
+      )
+    await waitForNextUpdate()
+    expect( result.current.isAuthenticated ).toEqual(false)
+    expect( result.current.isLoading ).toEqual(false)
+    const reloginRes = await simpleReLogin()
     act( () => {
-      result.current.setUserInfos({  user: 'fuga' })
+      result.current.setUserInfos({user: reloginRes.user})
     })
-
-    console.log(result)
-    //await waitForNextUpdate()
-    expect(true)
+    expect( result.current.user ).toEqual(reloginRes.user)
+  })
+  it('logout', async () => {
+    const wrapper = createWrapper({ reLogin: simpleReLogin })
+    const { result, waitForNextUpdate } = renderHook( 
+      () => useContext(userContext),
+      { wrapper }
+      )
+    await waitForNextUpdate()
+    
+    act( () => {
+      result.current.logout()
+    })
+    expect( result.current.user ).toBe( undefined )
+  })
+  it('logout callback', async () => {
+    let loggedin = true
+    const wrapper = createWrapper({ reLogin: simpleReLogin })
+    const { result, waitForNextUpdate } = renderHook( 
+      () => useContext(userContext),
+      { wrapper }
+      )
+    await waitForNextUpdate()
+    
+    act( () => {
+      result.current.logout( () => {
+        loggedin = false
+      })
+    })
+    expect( loggedin ).toBe( false )
+  })
+  it('workspace', async () => {
+    const workspace = 'workspace'
+    const wrapper = createWrapper({ reLogin: simpleReLogin })
+    const { result, waitForNextUpdate } = renderHook( 
+      () => useContext(userContext),
+      { wrapper }
+      )
+    await waitForNextUpdate()
+    const reloginRes = await simpleReLogin()
+    act( () => {
+      result.current.setUserInfos( { workspace: workspace })
+    })
+    expect( result.current.workspace ).toBe( workspace )
+    expect( result.current.user ).toEqual( reloginRes.user )
   })
 })

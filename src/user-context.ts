@@ -11,13 +11,16 @@ export interface IStatus {
     isAuthenticated: boolean;
 };
 
-export interface IActions {
-    logout: ( cb?: () => Promise<void> ) => Promise<void>;
-    setUserInfos: (option: Partial<IUserState> ) => void;
+export type CallbackFunction = () => void | Promise<void>;
+
+export interface IActions<UserT=any,WorkSpaceT=any>  {
+    logout: ( cb?: CallbackFunction ) => Promise<void>;
+    setUserInfos: (option: Partial<IUserState<UserT,WorkSpaceT>> ) => void;
 };
 
 export interface IUserContext<UserT=any,WorkSpaceT=any> 
-    extends IUserState<UserT,WorkSpaceT>, IStatus, IActions {};
+    extends IUserState<UserT,WorkSpaceT>, IStatus, IActions<UserT,WorkSpaceT> {};
+
 
 type UserContextKeys = keyof IUserContext<any,any>;
 

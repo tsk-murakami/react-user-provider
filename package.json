@@ -13,7 +13,7 @@
   },
   "scripts": {
     "build": "microbundle-crl --no-compress --format modern,cjs --tsconfig tsconfig.build.json",
-    "start": "microbundle-crl watch --no-compress --format modern,cjs",
+    "start": "microbundle-crl watch --no-compress --format modern,cjs --tsconfig tsconfig.build.json",
     "prepare": "run-s clean build",
     "clean": "rm -r dist",
     "test": "run-s test:unit test:build",
