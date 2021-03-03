@@ -32,7 +32,7 @@ describe('Simple', () => {
     expect( result.current.isLoading ).toEqual(false)
     const reloginRes = await simpleReLogin()
     act( () => {
-      result.current.setUserInfos({user: reloginRes.user})
+      result.current.setData({user: reloginRes.user})
     })
     expect( result.current.user ).toEqual(reloginRes.user)
   })
@@ -75,7 +75,7 @@ describe('Simple', () => {
     await waitForNextUpdate()
     const reloginRes = await simpleReLogin()
     act( () => {
-      result.current.setUserInfos( { workspace: workspace })
+      result.current.setData( { workspace: workspace })
     })
     expect( result.current.workspace ).toBe( workspace )
     expect( result.current.user ).toEqual( reloginRes.user )
