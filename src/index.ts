@@ -1,7 +1,8 @@
 
 export {
   default as UserContext,
-  NonNullableUserContext as UserContextInterface
+  NonNullableUserContext,
+  IUserContext
 } from './user-context';
 
 export { 

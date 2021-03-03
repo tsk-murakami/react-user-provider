@@ -50,7 +50,7 @@ const UserProvider: React.FC<IOptions> = props => {
             ...status,
             user: user,
             workspace: workspace,
-            setUserInfos: handleChange,
+            setData: handleChange,
             logout: logout
         }}
     >

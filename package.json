@@ -1,7 +1,7 @@
 {
   "name": "react-user-provider",
   "version": "1.0.0",
-  "description": "Made with create-react-library",
+  "description": "A simple React Context that holds the authentication information.",
   "author": "tsk-murakami",
   "license": "MIT",
   "repository": {
@@ -63,6 +63,10 @@
     "ts-jest": "^26.5.2",
     "typescript": "^3.7.5"
   },
+  "keywords": [
+    "react",
+    "react-provider"
+  ],
   "files": [
     "dist"
   ]

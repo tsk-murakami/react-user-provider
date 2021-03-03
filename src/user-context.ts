@@ -15,7 +15,7 @@ export type CallbackFunction = () => void | Promise<void>;
 
 export interface IActions<UserT=any,WorkSpaceT=any>  {
     logout: ( cb?: CallbackFunction ) => Promise<void>;
-    setUserInfos: (option: Partial<IUserState<UserT,WorkSpaceT>> ) => void;
+    setData: (option: IUserState<UserT,WorkSpaceT> ) => void;
 };
 
 export interface IUserContext<UserT=any,WorkSpaceT=any> 
@@ -36,7 +36,7 @@ const initialContext: IUserContext & IActions = {
     isAuthenticated: false,
     isLoading: true,
     logout: stub,
-    setUserInfos: stub,
+    setData: stub,
 };
 
 const userContext = createContext(initialContext)
