@@ -4,7 +4,10 @@
   "description": "Made with create-react-library",
   "author": "tsk-murakami",
   "license": "MIT",
-  "repository": "tsk-murakami/react-user-provider",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tsk-murakami/react-user-provider.git"
+  },
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
   "source": "src/index.ts",
